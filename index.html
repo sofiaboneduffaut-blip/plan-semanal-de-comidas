@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plan Semanal de Comidas</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Asistente de cocina</p>
+        <h1>Plan Semanal de Comidas</h1>
+        <p class="intro">Organiza una comida principal para cada dia laboral con recetas simples, medianas o dificiles segun tu despensa, tiempo y preferencias.</p>
+      </div>
+      <div class="header-panel" aria-label="Resumen de estructura de datos">
+        <span>Recipe</span>
+        <span>MealPlan</span>
+        <span>UserPreferences</span>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="planner-controls" aria-labelledby="preferences-title">
+        <div class="section-heading">
+          <p class="eyebrow">Preferencias</p>
+          <h2 id="preferences-title">Define la semana</h2>
+          <p class="section-description">Elige dieta, dificultad, tiempo, porciones y despensa disponible. Con estos datos el plan selecciona una receta principal para cada dia laboral.</p>
+        </div>
+
+        <form id="preferences-form" class="preferences-form">
+          <label>
+            Tipo de dieta
+            <select id="diet-type" name="diet_type">
+              <option value="no restriction">Sin restriccion</option>
+              <option value="vegetarian">Vegetariana</option>
+              <option value="vegan">Vegana</option>
+            </select>
+          </label>
+
+          <label>
+            Dificultad
+            <select id="difficulty" name="difficulty_preference">
+              <option value="mixed">Mixta</option>
+              <option value="simple">Simple</option>
+              <option value="medium">Media</option>
+              <option value="difficult">Dificil</option>
+            </select>
+          </label>
+
+          <label>
+            Tiempo maximo
+            <input id="max-time" name="max_time" type="number" min="15" max="180" step="5" value="60">
+          </label>
+
+          <label>
+            Porciones
+            <input id="servings" name="servings" type="number" min="1" max="12" value="4">
+          </label>
+
+          <label class="wide-field">
+            Ingredientes disponibles
+            <textarea id="available-ingredients" name="available_ingredients" rows="3" placeholder="Ej: arroz, tomate, garbanzos, espinaca"></textarea>
+          </label>
+
+          <label class="wide-field">
+            Ingredientes a evitar
+            <textarea id="excluded-ingredients" name="excluded_ingredients" rows="3" placeholder="Ej: mani, cebolla, lacteos"></textarea>
+          </label>
+
+          <div class="form-actions">
+            <div class="action-help">
+              <button class="primary-button" type="submit">Generar plan</button>
+              <p>Busca recetas compatibles con tus preferencias y arma automaticamente el menu de lunes a viernes.</p>
+            </div>
+            <div class="action-help">
+              <button class="secondary-button" id="shopping-button" type="button">Generar lista</button>
+              <p>Reune los ingredientes de las recetas elegidas y los agrupa por categoria para hacer las compras.</p>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="week-section" aria-labelledby="week-title">
+        <div class="section-heading week-heading">
+          <div>
+            <p class="eyebrow">Lunes a viernes</p>
+            <h2 id="week-title">Plan de comidas</h2>
+            <p class="section-description">Cuando defines la semana, cada tarjeta muestra la receta asignada a un dia, su dificultad, tiempo, ingredientes principales y acciones rapidas.</p>
+          </div>
+          <p id="plan-status" class="plan-status" role="status"></p>
+        </div>
+        <div id="week-grid" class="week-grid"></div>
+      </section>
+
+      <section class="shopping-section" aria-labelledby="shopping-title">
+        <div class="section-heading">
+          <p class="eyebrow">Compras</p>
+          <h2 id="shopping-title">Lista agrupada</h2>
+          <p class="section-description">Esta tabla resume lo que necesitas comprar para cocinar el plan actual, separando productos por verduras, despensa, lacteos, carnes y otras categorias.</p>
+        </div>
+        <div id="shopping-list" class="shopping-list empty-state">
+          Genera un plan y luego crea la lista de compras.
+        </div>
+      </section>
+
+      <section class="database-section" aria-labelledby="database-title">
+        <div class="section-heading">
+          <p class="eyebrow">Base local</p>
+          <h2 id="database-title">Recetas curadas</h2>
+          <p class="section-description">Esta tabla muestra la base local de recetas usadas por el planificador, con dieta, dificultad, tiempo y etiquetas para entender de donde salen las sugerencias.</p>
+        </div>
+        <div id="recipe-database" class="recipe-database"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

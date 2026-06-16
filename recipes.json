@@ -1,0 +1,38 @@
+{
+  "description": "Base local de recetas curadas para Plan Semanal de Comidas. No se hace scraping automatico; cada receta incluye fuente o enlace de inspiracion.",
+  "model": {
+    "Recipe": {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "diet_type": "vegetarian | vegan | no restriction",
+      "difficulty": "simple | medium | difficult",
+      "prep_time_minutes": "number",
+      "cook_time_minutes": "number",
+      "total_time_minutes": "number",
+      "servings": "number",
+      "ingredients": [{ "name": "string", "quantity": "string", "category": "string" }],
+      "steps": ["string"],
+      "tags": ["string"],
+      "source_name": "string",
+      "source_url": "string",
+      "is_favorite": "boolean"
+    },
+    "MealPlan": {
+      "id": "string",
+      "week_start_date": "YYYY-MM-DD",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "selected_recipes": "object",
+      "created_at": "ISO datetime"
+    },
+    "UserPreferences": {
+      "diet_type": "string",
+      "max_time": "number",
+      "difficulty_preference": "string",
+      "available_ingredients": ["string"],
+      "excluded_ingredients": ["string"],
+      "servings": "number"
+    }
+  },
+  "storage_note": "The working app keeps the curated recipe records in app.js for file-safe loading and mirrors the database schema here for migration to an API or database."
+}

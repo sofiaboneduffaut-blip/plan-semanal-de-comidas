@@ -26,7 +26,7 @@
       "created_at": "ISO datetime"
     },
     "UserPreferences": {
-      "diet_type": "string",
+      "diet_type": "vegetarian | vegan | no restriction | gluten free",
       "max_time": "number",
       "difficulty_preference": "string",
       "available_ingredients": ["string"],

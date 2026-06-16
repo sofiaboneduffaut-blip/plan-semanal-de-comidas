@@ -517,39 +517,6 @@ const recipeDatabase = [
     source_name: "Inspirada en panes rellenos caseros",
     source_url: "https://www.kingarthurbaking.com/learn/guides/bread",
     is_favorite: false
-  },
-  {
-    id: "r-017",
-    title: "Polenta cremosa con hongos y espinaca",
-    description: "Receta sin gluten con polenta suave, hongos dorados y hojas verdes.",
-    diet_type: "vegetarian",
-    difficulty: "simple",
-    prep_time_minutes: 10,
-    cook_time_minutes: 20,
-    total_time_minutes: 30,
-    servings: 4,
-    ingredients: [
-      item("polenta", "1 taza", "Despensa"),
-      item("caldo vegetal", "4 tazas", "Despensa"),
-      item("hongos", "350 g", "Verduras"),
-      item("espinaca", "2 tazas", "Verduras"),
-      item("queso rallado", "1/2 taza", "Lacteos"),
-      item("ajo", "1 diente", "Verduras"),
-      item("aceite de oliva", "2 cucharadas", "Despensa"),
-      item("pimienta", "1 pizca", "Especias")
-    ],
-    steps: [
-      "Calentar el caldo vegetal y agregar la polenta en forma de lluvia.",
-      "Revolver hasta que quede cremosa y sumar queso rallado.",
-      "Dorar los hongos con aceite de oliva, ajo y pimienta.",
-      "Agregar espinaca al sarten hasta que apenas se ablande.",
-      "Servir la polenta con los hongos y la espinaca por encima."
-    ],
-    tags: ["sin gluten", "vegetariana", "rapida"],
-    notes: "Usa polenta certificada sin gluten si la comida es para una persona celiaca.",
-    source_name: "Inspirada en guias de cocina sin gluten",
-    source_url: "https://celiac.org/gluten-free-living/gluten-free-foods/",
-    is_favorite: false
   }
 ];
 
@@ -658,7 +625,26 @@ function getFilteredRecipes() {
 function matchesDiet(recipe, dietType) {
   if (dietType === "no restriction") return true;
   if (dietType === "vegetarian") return recipe.diet_type === "vegetarian" || recipe.diet_type === "vegan";
+  if (dietType === "gluten free") return isGlutenFreeRecipe(recipe);
   return recipe.diet_type === "vegan";
+}
+
+function isGlutenFreeRecipe(recipe) {
+  const glutenTerms = [
+    "harina",
+    "masa",
+    "pasta",
+    "pan",
+    "pan rallado",
+    "tortillas",
+    "levadura"
+  ];
+
+  return recipe.ingredients.every((ingredient) => {
+    const name = normalizeText(ingredient.name);
+    const category = normalizeText(ingredient.category);
+    return category !== "panaderia" && !glutenTerms.some((term) => name.includes(term));
+  });
 }
 
 function hasExcludedIngredient(recipe, excludedIngredients) {
@@ -851,6 +837,7 @@ function labelDiet(dietType) {
   return {
     vegan: "Vegana",
     vegetarian: "Vegetariana",
+    "gluten free": "Sin gluten",
     "no restriction": "Sin restriccion"
   }[dietType];
 }
